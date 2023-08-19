@@ -1,13 +1,25 @@
 package com.somnang.springdeploy.controller;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.somnang.springdeploy.model.Person;
+import com.somnang.springdeploy.service.PersonService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 public class DeployerController {
-    @GetMapping("/home")
-    public String Greeting(){
-        //System.out.println("Hello world" );
-        return "Deploy Spring Boot Homework";
+    private final PersonService service;
+
+    public DeployerController(PersonService service) {
+        this.service = service;
     }
+
+    @PostMapping("/person")
+  public ResponseEntity<?> addNewPerson(@RequestBody Person person){
+        return ResponseEntity.ok().body(service.addPerson(person));
+    }
+    @GetMapping("/person")
+    public ResponseEntity<?> getPeople(){
+        return ResponseEntity.ok().body(service.getAllPeople());
+    }
+
 }
