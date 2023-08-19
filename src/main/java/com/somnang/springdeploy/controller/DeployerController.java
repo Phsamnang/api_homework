@@ -1,18 +1,19 @@
 package com.somnang.springdeploy.controller;
 import com.somnang.springdeploy.model.Person;
 import com.somnang.springdeploy.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
 public class DeployerController {
-    private final PersonService service;
 
+    private final PersonService service;
+@Autowired
     public DeployerController(PersonService service) {
         this.service = service;
     }
-
     @PostMapping("/person")
   public ResponseEntity<?> addNewPerson(@RequestBody Person person){
         return ResponseEntity.ok().body(service.addPerson(person));
